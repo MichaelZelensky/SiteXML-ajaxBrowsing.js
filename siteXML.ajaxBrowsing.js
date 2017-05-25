@@ -106,6 +106,7 @@
                     cz = me.getContentZoneByName(name);
                     if (cz) {
                         cz.innerHTML = me.SiteXML.content[cid];
+                        me.SiteXML.triggerEvent(window, 'sitexml.content.displayed');
                     }
                 }
             }
@@ -143,6 +144,7 @@
                 if (cid) {
                     if (this.SiteXML.content && this.SiteXML.content[cid]) {
                         czs[name].innerHTML = this.SiteXML.content[cid];
+                        this.SiteXML.triggerEvent(window, 'sitexml.content.displayed');
                     } else {
                         czs[name].innerHTML = 'loading...';
                         this.SiteXML.loadContent(cid);
@@ -231,45 +233,7 @@
         return names;
     };
 
-    //
-    /*siteXML.loadXML = function(path) {
-     var xhr,
-     me = this;
-     if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
-     xhr = new XMLHttpRequest();
-     } else if (window.ActiveXObject) { // IE 6 and older
-     xhr = new ActiveXObject("Microsoft.XMLHTTP");
-     }
-     xhr.open('GET', path);
-     xhr.send();
-     xhr.onload = function () {
-     me.xmlIsLoaded = true;
-     me.xml = this.responseXML;
-     triggerEvent('siteXML.xml.loaded');
-     }
-     };*/
-
-    /*function triggerEvent (name, element) {
-     var element = element || window;
-     event; // The custom event that will be created
-
-     if (document.createEvent) {
-     event = document.createEvent("HTMLEvents");
-     event.initEvent(name, true, true);
-     } else {
-     event = document.createEventObject();
-     event.eventType = name;
-     }
-
-     event.eventName = name;
-
-     if (document.createEvent) {
-     element.dispatchEvent(event);
-     } else {
-     element.fireEvent("on" + event.eventType, event);
-     }
-     }*/
-
+    /**/
     siteXML.init();
 
 })();
