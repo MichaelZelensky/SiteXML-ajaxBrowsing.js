@@ -50,8 +50,10 @@
             as = document.getElementsByTagName('a');
         this.addClickListeners(as);
         window.addEventListener("popstate", function(e) {
-            me.displayPage(e.state);
-            document.title = me.getTitle(e.state);
+            if (e.state) {
+                me.displayPage(e.state);
+                document.title = me.getTitle(e.state);
+            }
         });
         window.addEventListener("content.is.loaded", function(e) {
             var c, name, cz, cid = e.data.cid;
