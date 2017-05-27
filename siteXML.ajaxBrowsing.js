@@ -19,11 +19,6 @@
         this.SiteXML.loadSitexml();
         this.current_pid = this.getCurrentPid();
         this.start();
-
-        /*siteXML.loadXML('/?sitexml');
-         window.addEventListener('siteXML.xml.loaded', function () {
-         siteXML.start();
-         });*/
     };
 
     /*
