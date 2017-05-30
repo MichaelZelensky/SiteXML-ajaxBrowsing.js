@@ -105,7 +105,7 @@
                      *
                      * */
 
-                    var page, pid, theme_next,
+                    var page, pid, theme_next, alias,
                         theme_cur = me.SiteXML.getPageTheme(me.current_pid);
                     pid = this.getAttribute('pid');
                     theme_next = me.SiteXML.getPageTheme(pid);
@@ -117,7 +117,11 @@
                         me.displayPage(page);
                         //getting History API and displaying the right URL
                         document.title = me.getTitle(page);
-                        history.pushState(page, page.attributes.name, page.attributes.alias || '/id=' + page.attributes.id);
+                        alias = page.attributes.alias || '/id=' + page.attributes.id;
+                        if (alias[0] !== '/') {
+                            alias = '/' + alias;
+                        }
+                        history.pushState(page, page.attributes.name, alias);
                         return false;
                     } else {
                         //just use the link
