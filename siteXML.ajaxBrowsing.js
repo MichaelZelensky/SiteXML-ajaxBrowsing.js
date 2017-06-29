@@ -19,6 +19,11 @@
         this.SiteXML.loadSitexml();
         this.current_pid = this.getCurrentPid();
         this.start();
+
+        /*siteXML.loadXML('/?sitexml');
+         window.addEventListener('siteXML.xml.loaded', function () {
+         siteXML.start();
+         });*/
     };
 
     /*
@@ -26,16 +31,16 @@
     * */
     siteXML.getCurrentPid = function () {
         //looks through navigation pages and finds LI.siteXML-current element
-        var li,
+        var li, pid,
             lis = document.getElementsByTagName('li');
         for (var i = 0, n = lis.length; i < n; i++) {
             li = lis[i];
             if (li.getAttribute('pid') && li.className.indexOf('siteXML-current') > -1) {
-                li = li.getAttribute('pid');
+                pid = li.getAttribute('pid');
                 break;
             }
         }
-        return li || undefined;
+        return pid || undefined;
     };
 
     //
@@ -105,23 +110,19 @@
                      *
                      * */
 
-                    var page, pid, theme_next, alias,
+                    var page, pid, theme_next,
                         theme_cur = me.SiteXML.getPageTheme(me.current_pid);
                     pid = this.getAttribute('pid');
                     theme_next = me.SiteXML.getPageTheme(pid);
                     if (!history.pushState) {
                         //use link
                         return true;
-                    } else if (theme_next === theme_cur) {
+                    } else if (theme_next.attributes.dir === theme_cur.attributes.dir && theme_next.attributes.file === theme_cur.attributes.file) {
                         page = me.SiteXML.getPageById(pid);
                         me.displayPage(page);
                         //getting History API and displaying the right URL
                         document.title = me.getTitle(page);
-                        alias = page.attributes.alias || '/id=' + page.attributes.id;
-                        if (alias[0] !== '/') {
-                            alias = '/' + alias;
-                        }
-                        history.pushState(page, page.attributes.name, alias);
+                        history.pushState(page, page.attributes.name, page.attributes.alias || '/id=' + page.attributes.id);
                         return false;
                     } else {
                         //just use the link
