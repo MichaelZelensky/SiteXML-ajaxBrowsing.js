@@ -110,7 +110,7 @@
                      *
                      * */
 
-                    var page, pid, theme_next,
+                    var page, pid, theme_next, url,
                         theme_cur = me.SiteXML.getPageTheme(me.current_pid);
                     pid = this.getAttribute('pid');
                     theme_next = me.SiteXML.getPageTheme(pid);
@@ -122,7 +122,11 @@
                         me.displayPage(page);
                         //getting History API and displaying the right URL
                         document.title = me.getTitle(page);
-                        history.pushState(page, page.attributes.name, page.attributes.alias || '/id=' + page.attributes.id);
+                        url = page.attributes.alias || '/id=' + page.attributes.id;
+                        if (url[0] !== '/') {
+                            url = '/' + url;
+                        }
+                        history.pushState(page, page.attributes.name, url);
                         return false;
                     } else {
                         //just use the link
