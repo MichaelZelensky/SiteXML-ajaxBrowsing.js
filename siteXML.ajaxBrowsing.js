@@ -110,11 +110,12 @@
                      *
                      * */
 
-                    var page, pid, theme_next, url,
+                    var page, pid, theme_next, url, ajaxbrowsing,
                         theme_cur = me.SiteXML.getPageTheme(me.current_pid);
                     pid = this.getAttribute('pid');
                     theme_next = me.SiteXML.getPageTheme(pid);
-                    if (!history.pushState) {
+                    ajaxbrowsing = (theme_cur.attributes.ajaxbrowsing.toLowerCase() !== "no");
+                    if (!history.pushState || !ajaxbrowsing) {
                         //use link
                         return true;
                     } else if (theme_next.attributes.dir === theme_cur.attributes.dir && theme_next.attributes.file === theme_cur.attributes.file) {
